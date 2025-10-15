@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTrack Guru - Your Banks Guru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      color: white; 
+      background-color: black;
+    }
+    
+    /* Colores del manual de marca */
+    .primary-blue { color: #3b82f6; }
+    .primary-blue-bg { background-color: #3b82f6; }
+    .secondary-orange { color: #0ea5e9; }
+    .secondary-orange-bg { background-color: #0ea5e9; }
+    .gradient-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+    .gradient-secondary { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
+    
+    /* Efectos de transparencia del diseño original */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Animación de fondo estrellado */
+    .scroll-snap-x { scroll-snap-type: x mandatory; }
+    .snap-start { scroll-snap-align: start; }
+    @keyframes move-background {
+      from { transform: translate3d(0px, 0px, 0px); }
+      to { transform: translate3d(1000px, 0px, 0px); }
+    }
+    .background-container {
+      position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+      overflow: hidden; z-index: -1;
+    }
+    .stars {
+      background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+      position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+      z-index: 0;
+    }
+    .twinkling {
+      width: 10000px; height: 100%;
+      background: transparent url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png") repeat;
+      background-size: 1000px 1000px;
+      position: absolute; top: 0; bottom: 0; right: 0;
+      z-index: 2;
+      animation: move-background 70s linear infinite;
+    }
+    .clouds {
+      width: 10000px; height: 100%;
+      background: transparent url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/clouds_repeat.png") repeat;
+      background-size: 1000px 1000px;
+      position: absolute; top: 0; bottom: 0; right: 0;
+      z-index: 3;
+      animation: move-background 150s linear infinite;
+    }
+    .background-container img {
+      max-width: 80%; height: auto; max-height: 70vh; position: absolute; right: 20px; z-index: 3;
+    }
+    .moon-background {
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0.7;
+      filter: hue-rotate(200deg) saturate(1.5) brightness(0.8);
+      z-index: 1;
+      animation: moon-move-grow 15s ease-in-out infinite;
+    }
+    
+    @keyframes moon-move-grow {
+      0% {
+        top: 10%;
+        right: 10%;
+        width: 300px;
+        height: 300px;
+        opacity: 0.7;
+      }
+      50% {
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 600px;
+        height: 600px;
+        opacity: 0.9;
+      }
+      100% {
+        top: 10%;
+        right: 10%;
+        width: 300px;
+        height: 300px;
+        opacity: 0.7;
+      }
+    }
+    
+    /* BorderBeam Animation */
+    @keyframes border-beam {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .border-beam {
+      position: relative;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #ffaa40, #9c40ff, #ffaa40);
+      background-size: 200% 200%;
+      animation: border-beam 15s linear infinite;
+      padding: 2px;
+    }
+    .border-beam-content {
+      background: black;
+      border-radius: 10px;
+      padding: 2rem;
+      height: 100%;
+      width: 100%;
+    }
+    
+    /* MorphingText Animation */
+    .morphing-text {
+      display: inline-block;
+      position: relative;
+      height: 1.2em;
+      overflow: hidden;
+    }
+    .morphing-text span {
+      position: absolute;
+      opacity: 0;
+      animation: morph-text 8s infinite;
+    }
+    .morphing-text span:nth-child(1) { animation-delay: 0s; }
+    .morphing-text span:nth-child(2) { animation-delay: 2s; }
+    .morphing-text span:nth-child(3) { animation-delay: 4s; }
+    .morphing-text span:nth-child(4) { animation-delay: 6s; }
+    
+    @keyframes morph-text {
+      0%, 20% { opacity: 0; transform: translateY(20px); }
+      25%, 45% { opacity: 1; transform: translateY(0); }
+      50%, 100% { opacity: 0; transform: translateY(-20px); }
+    }
+    
+    /* Micro-interacciones */
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      border-radius: 6px;
+      font-weight: 500;
+      padding: 12px 24px;
+      box-shadow: 0 2px 15px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: white;
+      border-radius: 6px;
+      font-weight: 500;
+      padding: 12px 24px;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+    }
+    
+    /* Fade in animation */
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fade-in 0.8s ease-out;
+    }
+    
+    /* Gradient background for hero */
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+  <div class="background-container">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="clouds"></div>
+    <img src="img/moon.png" alt="Moon" class="moon-background">
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative flex flex-col items-center justify-center text-center px-6 py-24 hero-gradient">
+    <div class="relative z-10 max-w-4xl fade-in">
+      <!-- Logo -->
+      <div class="mb-8">
+        <img src="img/fintrack_logo.png" alt="FinTrack Guru" class="h-20 mx-auto">
+      </div>
+      
+      <!-- Título dinámico con MorphingText -->
+      <h1 class="text-5xl md:text-7xl font-bold mb-6">
+        <span class="morphing-text">
+          <span>Gestiona</span>
+          <span>Controla</span>
+          <span>Optimiza</span>
+          <span>Ahorra</span>
+        </span>
+        <br>tus finanzas
+      </h1>
+      
+      <!-- Descripción breve -->
+      <p class="text-xl md:text-2xl mb-8 text-gray-300">
+        La herramienta inteligente para explorar, gestionar y potenciar tus finanzas desde cualquier lugar.
+      </p>
+      
+      <!-- Imagen de la app -->
+      <div class="mb-8">
+        <img src="img/demo_app.png" alt="FinTrack Guru App" class="max-w-full h-auto rounded-lg shadow-2xl mx-auto">
+      </div>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <a href="https://app.fintrack.guru" class="btn-primary inline-block text-center">
+          Empieza Gratis
+        </a>
+        <a href="#features" class="btn-secondary inline-block text-center">
+          Conocer Más
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios y Características -->
+  <section id="features" class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-in">
+        Beneficios y Características
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Característica 1 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="trending-up" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Moderna, Accesible y Confiable</h3>
+          <p class="text-gray-300">Paleta inspirada en el espacio sideral que transmite profesionalismo y tecnología.</p>
+        </div>
+        
+        <!-- Característica 2 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="pie-chart" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Gestión Integral</h3>
+          <p class="text-gray-300">Visualiza, categoriza y controla tus finanzas en tiempo real.</p>
+        </div>
+        
+        <!-- Característica 3 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Optimización Personalizada</h3>
+          <p class="text-gray-300">Recomendaciones automáticas según hábitos de gasto.</p>
+        </div>
+        
+        <!-- Característica 4 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="smartphone" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Compatibilidad Multiplataforma</h3>
+          <p class="text-gray-300">Disponible en web y móvil con diseño responsivo y accesibilidad garantizada.</p>
+        </div>
+        
+        <!-- Característica 5 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Seguridad Bancaria</h3>
+          <p class="text-gray-300">Tus datos protegidos con encriptación de nivel bancario.</p>
+        </div>
+        
+        <!-- Característica 6 -->
+        <div class="glass-effect rounded-xl p-6 fade-in">
+          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="globe" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Soporte Multi-Idioma</h3>
+          <p class="text-gray-300">Español, Inglés, Portugués, Francés y Alemán.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Elementos Visuales y Confianza -->
+  <section class="py-20">
+    <div class="container mx-auto px-6">
+      <div class="border-beam max-w-4xl mx-auto">
+        <div class="border-beam-content">
+          <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+            Por qué elegir FinTrack Guru
+          </h2>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 gradient-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+              <i data-lucide="users" class="w-8 h-8 text-white"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Somos la única webapp para gestionar todos tus extractos bancarios</h3>
+            <p class="text-gray-300">Conviértete en un early adopter y obten gratis todas las funcionalidades por un año.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-6 max-w-3xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Preguntas Frecuentes</h2>
+      
+      <div class="space-y-4">
+        <details class="glass-effect rounded-lg p-6">
+          <summary class="font-medium cursor-pointer text-lg">¿Qué es FinTrack Guru?</summary>
+          <p class="mt-4 text-gray-300">FinTrack Guru es la solución definitiva para individuos y familias que buscan tomar el control total de sus finanzas personales con tecnología de vanguardia impulsada por IA.</p>
+        </details>
+        
+        <details class="glass-effect rounded-lg p-6">
+          <summary class="font-medium cursor-pointer text-lg">¿Cómo funciona la categorización inteligente?</summary>
+          <p class="mt-4 text-gray-300">Nuestra IA analiza tus transacciones, sugiere categorías automáticamente con más del 90% de precisión, y aprende de tus patrones para mejorar continuamente.</p>
+        </details>
+        
+        <details class="glass-effect rounded-lg p-6">
+          <summary class="font-medium cursor-pointer text-lg">¿Es seguro usar FinTrack Guru?</summary>
+          <p class="mt-4 text-gray-300">Sí, utilizamos encriptación de nivel bancario, autenticación segura y cumplimos con los más altos estándares de seguridad financiera.</p>
+        </details>
+        
+        <details class="glass-effect rounded-lg p-6">
+          <summary class="font-medium cursor-pointer text-lg">¿Qué bancos son compatibles?</summary>
+          <p class="mt-4 text-gray-300">Soportamos la mayoría de bancos argentinos y latinoamericanos incluyendo Brubank, Galicia, Santander, BBVA y más.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/30 py-12 mt-auto bg-black/50">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <!-- Logo y descripción -->
+        <div>
+          <img src="img/fintrack_logo.png" alt="FinTrack Guru" class="h-12 mb-4">
+          <p class="text-sm text-gray-400">Tu compañero inteligente en el camino hacia la libertad financiera.</p>
+        </div>
+        
+        <!-- Enlaces útiles -->
+        <div>
+          <h4 class="font-semibold mb-4">Producto</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#features" class="hover:text-white transition">Características</a></li>
+            <li><a href="https://app.fintrack.guru" class="hover:text-white transition">Prueba la app</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">Planes</a></li>
+          </ul>
+        </div>
+        
+        
+        <!-- Legal -->
+        <div>
+          <h4 class="font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition">Política de privacidad</a></li>
+            <li><a href="#" class="hover:text-white transition">Términos de servicio</a></li>
+            <li><a href="#" class="hover:text-white transition">Guía de accesibilidad</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/20 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
+        <p>© <script>document.write(new Date().getFullYear())</script> FinTrack Guru. Todos los derechos reservados.</p>
+        <div class="flex items-center gap-4 mt-4 md:mt-0">
+          <a href="mailto:hello@fintrack.guru" class="hover:text-white transition">hello@fintrack.guru</a>
+          <div class="flex gap-2">
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+            <i data-lucide="twitter" class="w-4 h-4"></i>
+            <i data-lucide="linkedin" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Inicializar Lucide icons
+    lucide.createIcons();
+    
+    // Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Animación fade-in al hacer scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
