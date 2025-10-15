@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FinTrack Guru - Your Banks Guru</title>
+  <title>FinTrack Guru - Sugerencias</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
-    body { 
-      font-family: 'Inter', sans-serif; 
-      color: white; 
+    body {
+      font-family: 'Inter', sans-serif;
+      color: white;
       background-color: black;
     }
-    
+
     /* Colores del manual de marca */
     .primary-blue { color: #3b82f6; }
     .primary-blue-bg { background-color: #3b82f6; }
@@ -21,14 +22,14 @@
     .secondary-orange-bg { background-color: #0ea5e9; }
     .gradient-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
     .gradient-secondary { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
-    
+
     /* Efectos de transparencia del diseño original */
     .glass-effect {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    
+
     /* Animación de fondo estrellado */
     .scroll-snap-x { scroll-snap-type: x mandatory; }
     .snap-start { scroll-snap-align: start; }
@@ -134,7 +135,7 @@
         }
       }
     }
-    
+
     /* BorderBeam Animation */
     @keyframes border-beam {
       0% {
@@ -162,7 +163,7 @@
       height: 100%;
       width: 100%;
     }
-    
+
     /* MorphingText Animation */
     .morphing-text {
       display: inline-block;
@@ -179,13 +180,13 @@
     .morphing-text span:nth-child(2) { animation-delay: 2s; }
     .morphing-text span:nth-child(3) { animation-delay: 4s; }
     .morphing-text span:nth-child(4) { animation-delay: 6s; }
-    
+
     @keyframes morph-text {
       0%, 20% { opacity: 0; transform: translateY(20px); }
       25%, 45% { opacity: 1; transform: translateY(0); }
       50%, 100% { opacity: 0; transform: translateY(-20px); }
     }
-    
+
     /* Micro-interacciones */
     .btn-primary {
       background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
@@ -200,7 +201,7 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
     }
-    
+
     .btn-secondary {
       background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
       color: white;
@@ -213,7 +214,7 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
     }
-    
+
     /* Fade in animation */
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(20px); }
@@ -222,10 +223,43 @@
     .fade-in {
       animation: fade-in 0.8s ease-out;
     }
-    
+
     /* Gradient background for hero */
     .hero-gradient {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+    }
+
+    /* Slider styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #3b82f6 0%, #0ea5e9 100%);
+      outline: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    input[type="range"]:hover {
+      opacity: 1;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: none;
     }
   </style>
 </head>
@@ -237,158 +271,76 @@
     <img src="img/moon.png" alt="Moon" class="moon-background">
   </div>
 
-  <!-- Hero Section -->
-  <section class="relative flex flex-col items-center justify-center text-center px-6 py-24 hero-gradient">
-    <div class="relative z-10 max-w-4xl fade-in">
-      <!-- Logo -->
-      <div class="mb-8">
-        <img src="img/fintrack_logo.png" alt="FinTrack Guru" class="h-20 mx-auto">
-      </div>
-      
-      <!-- Título dinámico con MorphingText -->
-      <h1 class="text-5xl md:text-7xl font-bold mb-6">
-        <span class="morphing-text">
-          <span>Gestiona</span>
-          <span>Controla</span>
-          <span>Optimiza</span>
-          <span>Ahorra</span>
-        </span>
-        <br>tus finanzas
-      </h1>
-      
-      <!-- Descripción breve -->
-      <p class="text-xl md:text-2xl mb-8 text-gray-300">
-        La herramienta inteligente para explorar, gestionar y potenciar tus finanzas desde cualquier lugar.
+  <!-- Header -->
+  <header class="relative z-10 py-6">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <a href="index.html" class="flex items-center">
+        <img src="img/fintrack_logo.png" alt="FinTrack Guru" class="h-12">
+      </a>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-primary-blue transition">Inicio</a>
+        <a href="index.html#features" class="hover:text-primary-blue transition">Características</a>
+        <a href="form.html" class="hover:text-primary-blue transition">Sugerencias</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Form Section -->
+  <section class="relative flex flex-col items-center justify-center text-center px-6 py-24">
+    <div class="relative z-10 max-w-2xl fade-in">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Tus Sugerencias</h1>
+      <p class="text-xl mb-8 text-gray-300">
+        Ayúdanos a mejorar FinTrack Guru con tus comentarios y sugerencias.
       </p>
-      
-      <!-- Imagen de la app -->
-      <div class="mb-8">
-        <img src="img/demo_app.png" alt="FinTrack Guru App" class="max-w-full h-auto rounded-lg shadow-2xl mx-auto">
-      </div>
-      
-      <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-        <a href="https://app.fintrack.guru" class="btn-primary inline-block text-center">
-          Empieza Gratis
-        </a>
-        <a href="#features" class="btn-secondary inline-block text-center">
-          Conocer Más
-        </a>
-      </div>
-    </div>
-  </section>
 
-  <!-- Beneficios y Características -->
-  <section id="features" class="py-20">
-    <div class="container mx-auto px-6">
-      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-in">
-        Beneficios y Características
-      </h2>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Característica 1 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="trending-up" class="w-6 h-6 text-white"></i>
+      <div class="glass-effect rounded-xl p-8">
+        <form id="suggestionForm" class="space-y-6">
+          <!-- Comentario general -->
+          <div>
+            <label for="comentario" class="block text-left font-semibold mb-2">Comentario general</label>
+            <textarea id="comentario" name="comentario" rows="4" class="w-full px-4 py-2 bg-black/50 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-blue" placeholder="Escribe tu comentario aquí..."></textarea>
           </div>
-          <h3 class="text-xl font-semibold mb-2">Moderna, Accesible y Confiable</h3>
-          <p class="text-gray-300">Paleta inspirada en el espacio sideral que transmite profesionalismo y tecnología.</p>
-        </div>
-        
-        <!-- Característica 2 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="pie-chart" class="w-6 h-6 text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">Gestión Integral</h3>
-          <p class="text-gray-300">Visualiza, categoriza y controla tus finanzas en tiempo real.</p>
-        </div>
-        
-        <!-- Característica 3 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="brain" class="w-6 h-6 text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">Optimización Personalizada</h3>
-          <p class="text-gray-300">Recomendaciones automáticas según hábitos de gasto.</p>
-        </div>
-        
-        <!-- Característica 4 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="smartphone" class="w-6 h-6 text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">Compatibilidad Multiplataforma</h3>
-          <p class="text-gray-300">Disponible en web y móvil con diseño responsivo y accesibilidad garantizada.</p>
-        </div>
-        
-        <!-- Característica 5 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="shield" class="w-6 h-6 text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">Seguridad Bancaria</h3>
-          <p class="text-gray-300">Tus datos protegidos con encriptación de nivel bancario.</p>
-        </div>
-        
-        <!-- Característica 6 -->
-        <div class="glass-effect rounded-xl p-6 fade-in">
-          <div class="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mb-4">
-            <i data-lucide="globe" class="w-6 h-6 text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">Soporte Multi-Idioma</h3>
-          <p class="text-gray-300">Español, Inglés, Portugués, Francés y Alemán.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Elementos Visuales y Confianza -->
-  <section class="py-20">
-    <div class="container mx-auto px-6">
-      <div class="border-beam max-w-4xl mx-auto">
-        <div class="border-beam-content">
-          <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-            Por qué elegir FinTrack Guru
-          </h2>
-          
-          <div class="text-center">
-            <div class="w-16 h-16 gradient-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-              <i data-lucide="users" class="w-8 h-8 text-white"></i>
+          <!-- Puntaje -->
+          <div>
+            <label for="puntaje" class="block text-left font-semibold mb-2">Puntaje (1-5): 1 = No la usaré, 5 = La usaré seguramente</label>
+            <input type="range" id="puntaje" name="puntaje" min="1" max="5" value="3" class="w-full">
+            <div class="flex justify-between text-sm text-gray-400 mt-1">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Somos la única webapp para gestionar todos tus extractos bancarios</h3>
-            <p class="text-gray-300">Conviértete en un early adopter y obten gratis todas las funcionalidades por un año.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- FAQ Section -->
-  <section class="py-20">
-    <div class="container mx-auto px-6 max-w-3xl">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Preguntas Frecuentes</h2>
-      
-      <div class="space-y-4">
-        <details class="glass-effect rounded-lg p-6">
-          <summary class="font-medium cursor-pointer text-lg">¿Qué es FinTrack Guru?</summary>
-          <p class="mt-4 text-gray-300">FinTrack Guru es la solución definitiva para individuos y familias que buscan tomar el control total de sus finanzas personales con tecnología de vanguardia impulsada por IA.</p>
-        </details>
-        
-        <details class="glass-effect rounded-lg p-6">
-          <summary class="font-medium cursor-pointer text-lg">¿Cómo funciona la categorización inteligente?</summary>
-          <p class="mt-4 text-gray-300">Nuestra IA analiza tus transacciones, sugiere categorías automáticamente con más del 90% de precisión, y aprende de tus patrones para mejorar continuamente.</p>
-        </details>
-        
-        <details class="glass-effect rounded-lg p-6">
-          <summary class="font-medium cursor-pointer text-lg">¿Es seguro usar FinTrack Guru?</summary>
-          <p class="mt-4 text-gray-300">Sí, utilizamos encriptación de nivel bancario, autenticación segura y cumplimos con los más altos estándares de seguridad financiera.</p>
-        </details>
-        
-        <details class="glass-effect rounded-lg p-6">
-          <summary class="font-medium cursor-pointer text-lg">¿Qué bancos son compatibles?</summary>
-          <p class="mt-4 text-gray-300">Soportamos la mayoría de bancos argentinos y latinoamericanos incluyendo Brubank, Galicia, Santander, BBVA y más.</p>
-        </details>
+          <!-- Función o característica -->
+          <div>
+            <label for="funcion" class="block text-left font-semibold mb-2">¿Qué función o característica agregarías?</label>
+            <input type="text" id="funcion" name="funcion" class="w-full px-4 py-2 bg-black/50 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-blue" placeholder="Describe la función que te gustaría...">
+          </div>
+
+          <!-- ¿Pagarías por el acceso? -->
+          <div>
+            <label class="block text-left font-semibold mb-2">¿Pagarías por el acceso?</label>
+            <div class="flex space-x-6">
+              <label class="flex items-center">
+                <input type="radio" name="pagar" value="si" class="mr-2">
+                <span>Sí</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="pagar" value="no" class="mr-2">
+                <span>No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" id="submitBtn" class="btn-primary">Enviar Sugerencia</button>
+            <p id="statusMessage" class="mt-4 text-sm"></p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -402,19 +354,19 @@
           <img src="img/fintrack_logo.png" alt="FinTrack Guru" class="h-12 mb-4">
           <p class="text-sm text-gray-400">Tu compañero inteligente en el camino hacia la libertad financiera.</p>
         </div>
-        
+
         <!-- Enlaces útiles -->
         <div>
           <h4 class="font-semibold mb-4">Producto</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="#features" class="hover:text-white transition">Características</a></li>
+            <li><a href="index.html#features" class="hover:text-white transition">Características</a></li>
             <li><a href="https://app.fintrack.guru" class="hover:text-white transition">Prueba la app</a></li>
             <li><a href="#pricing" class="hover:text-white transition">Planes</a></li>
             <li><a href="form.html" class="hover:text-white transition">Sugerencias</a></li>
           </ul>
         </div>
-        
-        
+
+
         <!-- Legal -->
         <div>
           <h4 class="font-semibold mb-4">Legal</h4>
@@ -425,7 +377,7 @@
           </ul>
         </div>
       </div>
-      
+
       <div class="border-t border-white/20 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
         <p>© <script>document.write(new Date().getFullYear())</script> FinTrack Guru. Todos los derechos reservados.</p>
         <div class="flex items-center gap-4 mt-4 md:mt-0">
@@ -441,9 +393,55 @@
   </footer>
 
   <script>
+    // Inicializar EmailJS
+    (function(){
+      emailjs.init("OYJRnk0VCpZGj23RQ"); // Replace with your EmailJS public key
+    })();
+
     // Inicializar Lucide icons
     lucide.createIcons();
-    
+
+    // Form submission handler
+    document.getElementById('suggestionForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const statusMessage = document.getElementById('statusMessage');
+
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      statusMessage.textContent = '';
+      statusMessage.className = 'mt-4 text-sm';
+
+      // Get form data
+      const formData = new FormData(this);
+      const templateParams = {
+        comentario: formData.get('comentario'),
+        puntaje: formData.get('puntaje'),
+        funcion: formData.get('funcion'),
+        pagar: formData.get('pagar') === 'si' ? 'Sí' : 'No'
+      };
+
+      // Send email using EmailJS
+      emailjs.send('service_3tzlte5', 'template_rm85dyl', templateParams) // Replace with your EmailJS service and template IDs
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          statusMessage.textContent = '¡Gracias por tu sugerencia! Hemos recibido tu mensaje.';
+          statusMessage.className = 'mt-4 text-sm text-green-400';
+          submitBtn.textContent = 'Enviado ✓';
+          submitBtn.classList.add('opacity-50');
+          // Reset form
+          document.getElementById('suggestionForm').reset();
+        }, function(error) {
+          console.log('FAILED...', error);
+          statusMessage.textContent = 'Error al enviar la sugerencia. Por favor, intenta de nuevo.';
+          statusMessage.className = 'mt-4 text-sm text-red-400';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar Sugerencia';
+        });
+    });
+
     // Smooth scroll para enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -457,13 +455,13 @@
         }
       });
     });
-    
+
     // Animación fade-in al hacer scroll
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -472,7 +470,7 @@
         }
       });
     }, observerOptions);
-    
+
     document.querySelectorAll('.fade-in').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
